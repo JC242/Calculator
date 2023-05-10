@@ -11,7 +11,7 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: grey;
+    background-color: lavender;
 }
 .container{
     display: flex;
@@ -23,6 +23,7 @@ body{
     background-color: black;
     border-radius: 30px;
     border: solid 1px lightgrey;
+    box-shadow: 10px 10px grey;
 }
 .screen{
     display: flex;
@@ -30,18 +31,26 @@ body{
     width: 450px;
     margin: 20px;
     justify-content: end;
+    flex-direction: column;
     align-items: center;
     background-color: white;
     border-radius: 10px;
 }
-.screen p{
+.screen .count{
     display: flex;
-    height: 90px;
+    height: 40px;
     width: 420px;
-    margin: 10px;
+    margin: 0px;
     justify-content: end;
-    align-items: center;
-    font-size: 48px;
+    font-size:32px;
+}
+.screen .result{
+    display: flex;
+    height: 60px;
+    width: 420px;
+    margin:0px;
+    justify-content: end;
+    font-size:52px;
 }
 .buttons{
     display: flex;
@@ -94,6 +103,10 @@ body{
     border-radius: 50px;
     border: solid 2px lightgrey;
     font-size: 32px;
+}
+.btn:hover{
+    background-color: white;
+    color: black;
 }
 .cero{
     width: 210px;
