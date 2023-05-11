@@ -108,6 +108,9 @@ body{
     background-color: white;
     color: black;
 }
+.btn:active{
+    background-color: orange;
+}
 .cero{
     width: 210px;
 }

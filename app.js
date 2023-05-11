@@ -1,4 +1,7 @@
 let val = "1 / 2"
+const btns = document.querySelectorAll(".btn");
+const result = document.querySelector(".result");
+
 
 const add = (a,b) =>{
     return a + b;
@@ -17,6 +20,14 @@ const divide = (a,b) =>{
 const  values = (val)=>{
     const digits = val.split(" ")
     return digits
+}
+
+const action = (digit)=>{
+    if(parseInt(digit) || parseInt(digit) == 0){
+        result.textContent = digit
+    }else{
+        console.log("no lo es");
+    }
 }
 
 const calculator = (val) =>{
@@ -38,5 +49,10 @@ const calculator = (val) =>{
         console.log(divide(digit1,digit2))
     }
 } 
-
-calculator(val);
+window.onload = () =>{
+    btns.forEach(btn => {
+        btn.addEventListener('click',function(){
+            action(btn.textContent)
+        })
+    });
+}
