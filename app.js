@@ -5,7 +5,6 @@ const count = document.querySelector(".count");
 let array = [];
 let digit1 = 0;
 let digit2 = 0;
-let sign = "";
 
 const add = (a,b) =>{
     return a + b;
@@ -22,6 +21,7 @@ const divide = (a,b) =>{
 }  
 
 const action = (digit)=>{
+    
     if(parseInt(digit) || parseInt(digit) == 0 || digit == "."){
         
         if(array.length < 16){
@@ -34,12 +34,15 @@ const action = (digit)=>{
                 array.push(digit)
                 digit1 = updateDisplay(array);
             }
+            console.log(array)
         }
     }else{
         if(digit === "+" || digit === "-" || digit === "x" || digit === "÷" || digit ==="=" || digit === "%"){
-            calculator(digit,array);
+            console.log(array);
+            array =  calculator(digit,array);
         }
         else if(digit === "▶"){
+            console.log(array);
             backSpace(array);
         }
         else if(digit === "AC"){
@@ -67,7 +70,6 @@ const updateDisplay = (digits) =>{
         numbers = digits.join("");
     }
     result.textContent = numbers;
-    return numbers;
 }
 const backSpace = (array) =>{
     array.pop()
@@ -88,6 +90,16 @@ const convertInt = (numbers)=>{
 
 const calculator = (sign,array) =>{
     
+    if(sign == "%"){
+        digits = convertInt(array) / 100;
+        console.log(digits)
+        digits = digits.toString().split("");
+        array = digits;
+        console.log(digits)
+        console.log(array)
+        updateDisplay(array)
+    }
+    return array;
 }
 
 window.onload = () =>{
