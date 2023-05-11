@@ -1,7 +1,11 @@
-let val = "1 / 2"
 const btns = document.querySelectorAll(".btn");
 const result = document.querySelector(".result");
+const count = document.querySelector(".count");
 
+let array = []
+let digit1 = "";
+let digit2 = "";
+let sign = "";
 
 const add = (a,b) =>{
     return a + b;
@@ -17,38 +21,53 @@ const divide = (a,b) =>{
     return a / b;
 }  
 
-const  values = (val)=>{
-    const digits = val.split(" ")
-    return digits
-}
-
 const action = (digit)=>{
-    if(parseInt(digit) || parseInt(digit) == 0){
-        result.textContent = digit
+    if(parseInt(digit) || parseInt(digit) == 0 || digit == "."){
+        
+        if(array.length < 16){
+            array.push(digit)
+            digit1 = updateDisplay(array);
+        }
     }else{
-        console.log("no lo es");
+        if(digit === "+" || digit === "-" || digit === "x" || digit === "÷"){
+            calculator(sign);
+        }
+        else if(digit === "▶"){
+           backSpace(array);
+        }
+        else if(digit === "AC"){
+            clearDisplay();
+        }
     }
 }
 
-const calculator = (val) =>{
+const clearDisplay = () =>{
+    array = [];
+    digit1 = 0;
+    digit2 = 0;
+    sign = "";
+    result.textContent = 0;
+}
 
-    const vals = values(val)
-    const digit1 = parseInt(vals[0])
-    const digit2 = parseInt(vals[2]);
+const updateDisplay = (digits) =>{
 
-    if(vals[1] === "+"){
-        console.log(add(digit1,digit2))
+    let numbers = "0"
+    if(digits.length > 0){
+        numbers = digits.join("")
     }
-    else if(vals[1] === "-"){
-        console.log(substract(digit1,digit2))
-    }
-    else if(vals[1] === "*"){
-        console.log(multiply(digit1,digit2))
-    }
-    else if(vals[1] === "/"){
-        console.log(divide(digit1,digit2))
-    }
-} 
+    console.log(numbers)
+    result.textContent = numbers;
+    return numbers
+}
+const backSpace = (array) =>{
+    array.pop()
+    updateDisplay(array);
+}
+
+const calculator = (sign) =>{
+
+}
+
 window.onload = () =>{
     btns.forEach(btn => {
         btn.addEventListener('click',function(){
