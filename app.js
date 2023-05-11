@@ -34,16 +34,14 @@ const action = (digit)=>{
                 array.push(digit)
                 digit1 = updateDisplay(array);
             }
-            console.log(array)
         }
     }else{
         if(digit === "+" || digit === "-" || digit === "x" || digit === "÷" || digit ==="=" || digit === "%"){
-            console.log(array);
             array =  calculator(digit,array);
         }
         else if(digit === "▶"){
-            console.log(array);
-            backSpace(array);
+            array = backSpace(array);
+            console.log(array)
         }
         else if(digit === "AC"){
             clearDisplay();
@@ -65,15 +63,19 @@ const updateDisplay = (digits) =>{
     if(digits.length > 0){
         if(digits[0] == "."){
             digits.unshift("0");
-            console.log(digits)
         }
         numbers = digits.join("");
     }
     result.textContent = numbers;
 }
 const backSpace = (array) =>{
-    array.pop()
+    if(array[0] == "0" && array[1] == "."){
+        array = [];
+    }else{
+        array.pop()
+    }
     updateDisplay(array);
+    return array;
 }
 
 const convertInt = (numbers)=>{
@@ -92,11 +94,8 @@ const calculator = (sign,array) =>{
     
     if(sign == "%"){
         digits = convertInt(array) / 100;
-        console.log(digits)
         digits = digits.toString().split("");
         array = digits;
-        console.log(digits)
-        console.log(array)
         updateDisplay(array)
     }
     return array;
