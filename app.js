@@ -53,43 +53,30 @@ const action = (digit) =>{
         if(digit === "+" || digit === "-" || digit === "x" || digit === "÷" || digit ==="=" || digit === "%" || digit === "AC"){
             
             if(digit === "+"){
-                if(btnAdd.classList.contains("sign")){
-                    btnAdd.classList.remove("sign");
-                }else{
                     btnAdd.classList.add("sign");
                     btnDiv.classList.remove("sign");
                     btnMult.classList.remove("sign");
                     btnSub.classList.remove("sign");
-                }
+                
             }else if(digit === "-"){
-                if(btnSub.classList.contains("sign")){
-                    btnSub.classList.remove("sign");
-                }else{
+              
                     btnAdd.classList.remove("sign");
                     btnDiv.classList.remove("sign");
                     btnMult.classList.remove("sign");
                     btnSub.classList.add("sign");
-                }      
+                      
             }else if(digit === "x"){
-                if(btnMult.classList.contains("sign")){
-                    btnMult.classList.remove("sign");
-                }else{
                     btnAdd.classList.remove("sign");
                     btnDiv.classList.remove("sign");
                     btnMult.classList.add("sign");
                     btnSub.classList.remove("sign");
-                }
             }else if(digit === "÷"){
-                if(btnDiv.classList.contains("sign")){
-                    btnDiv.classList.remove("sign");
-                }else{
                     btnAdd.classList.remove("sign");
                     btnDiv.classList.add("sign");
                     btnMult.classList.remove("sign");
                     btnSub.classList.remove("sign");
-                }
             }
-            //array =  calculator(digit,array);
+            array =  calculator(digit,array);
         }
         else if(digit === "▶"){
             array = backSpace(array);
@@ -114,6 +101,7 @@ const updateDisplay = (digits) =>{
     }
     result.textContent = numbers;
 }
+
 const backSpace = (array) =>{
     if(array[0] == "0" && array[1] == "."){
         array = [];
@@ -157,8 +145,6 @@ const calculator = (sign,array) =>{
             if(sign == "-"){
                 nums[0] = substract(nums[0],nums[1]);
             }
-            sign = "";
-
             updateDisplay(nums[0].toString().split(""))
         }
         console.log(nums);
