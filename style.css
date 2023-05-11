@@ -34,7 +34,7 @@ body{
     flex-direction: column;
     align-items: center;
     background-color: white;
-    border: solid 5px lightgrey;
+    border: solid 5px grey;
     border-radius: 10px;
 }
 .screen .count{
