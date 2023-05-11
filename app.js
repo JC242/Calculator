@@ -60,6 +60,10 @@ const updateDisplay = (digits) =>{
 
     let numbers = "0";
     if(digits.length > 0){
+        if(digits[0] == "."){
+            digits.unshift("0");
+            console.log(digits)
+        }
         numbers = digits.join("");
     }
     result.textContent = numbers;
