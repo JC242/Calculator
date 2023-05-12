@@ -26,8 +26,6 @@ const updateArray = (digit)=>{
         }
        
     }
-    console.log("update");
-    console.log(array);
     updateDisplay(array);
     return array;
 }   
@@ -41,6 +39,7 @@ const updateDisplay = (array)=>{
         numbers = array.join("");
     }
     result.textContent = numbers;
+    return array;
 }
 
 const deleteNum = (array) =>{
@@ -59,21 +58,25 @@ const clearDisplay = (array,arrayBuffer) =>{
     return [array,arrayBuffer];
 }
 
-const porcentage = (array) =>{
-    if(array.length > 0){
-        if(array[0] == "."){
-            array.unshift("0");
+const porcentage = () =>{
+    nums = result.textContent;
+    if(nums !== "0"){
+        nums = nums.split("");
+
+        if(nums[0] == "."){
+            nums.unshift("0");
         }
-        numbers = array.join("");
+        numbers = nums.join("");
         numbers = parseFloat(numbers) / 100;
         numbers = numbers.toString().split("");
         updateDisplay(numbers);
+        console.log(numbers)
         return numbers;
     }
 }
 
 const updateBuffer = (digit,array,arrayBuffer,operation) =>{
-
+    arrayBuffer[3] = operation;
     if(Number.isNaN(digit) == false){
         if(arrayBuffer[0] == "a"){
             arrayBuffer[0] = digit;
@@ -95,11 +98,13 @@ const updateBuffer = (digit,array,arrayBuffer,operation) =>{
             }
             
             updateDisplay(arrayBuffer[0].toString().split(""));
+    
             arrayBuffer[2] = arrayBuffer[1];
             arrayBuffer[1] = 'b';
+            arrayBuffer[3] = operation;
             console.log(arrayBuffer);
         }
-        return [array = [], arrayBuffer];
+        return [array = [] , arrayBuffer];
     }
     return [array, arrayBuffer];
 }
@@ -111,15 +116,36 @@ const operation = (array,arrayBuffer,sign) =>{
     return [array , arrayBuffer];
 }
 
-const enter = (array,arrayBuffer) =>{
+const enter = (array, arrayBuffer) =>{
+    console.log(arrayBuffer);
+    console.log(array);
+    let num = 0;
+    digit = parseFloat(array.join(""));
+    console.log(digit);
 
-    return [array,arrayBuffer];
+    if(arrayBuffer[3] == "+"){
+        num = arrayBuffer[0] + digit
+        arrayBuffer[0] = num;
+    }else if(arrayBuffer[3] == "-"){
+        num = arrayBuffer[0] - digit
+        arrayBuffer[0] = num;
+    }else if(arrayBuffer[3] == "x"){
+        num = arrayBuffer[0] * digit
+        arrayBuffer[0] = num;
+    }else if(arrayBuffer[3] == "÷"){
+        num = arrayBuffer[0] / digit
+        arrayBuffer[0] = num;
+    }
+    console.log(num);
+    console.log(arrayBuffer);
+    num = updateDisplay(num.toString().split(""));
+    return [num, arrayBuffer];
 }
     
 window.onload = () =>{
    btnsNums.forEach(num => {
        num.addEventListener("click",function(e){
-        array = updateArray(num.textContent);
+            array = updateArray(num.textContent);
        });
    });
    btnDel.addEventListener("click",function(e){
@@ -129,7 +155,7 @@ window.onload = () =>{
         [array,arrayBuffer] = clearDisplay(array,arrayBuffer);
    });
    btnPorc.addEventListener("click",function(e){
-        array = porcentage(array);
+       array = porcentage();
    });
    btnAdd.addEventListener("click",function(e){
         [array,arrayBuffer] = operation(array,arrayBuffer,btnAdd.textContent);
