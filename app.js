@@ -9,6 +9,7 @@ const btnDiv = document.querySelector(".div");
 let array = ["0"];
 let num = "";
 let nums = ["a","b"];
+let signbuffer = "";
 
 const add = (a,b) =>{
     c = a + b;
@@ -51,42 +52,97 @@ const action = (digit) =>{
         }
     }else{
         if(digit === "+" || digit === "-" || digit === "x" || digit === "÷" || digit ==="=" || digit === "%" || digit === "AC"){
-            
-            if(digit === "+"){
+        
+                    if(digit === "+"){
 
-                btnAdd.classList.add("sign");
-                btnDiv.classList.remove("sign");
-                btnMult.classList.remove("sign");
-                btnSub.classList.remove("sign");
-                
-            }else if(digit === "-"){
-              
-                btnAdd.classList.remove("sign");
-                btnDiv.classList.remove("sign");
-                btnMult.classList.remove("sign");
-                btnSub.classList.add("sign");
-                      
-            }else if(digit === "x"){
+                        btnAdd.classList.add("sign");
+                        btnDiv.classList.remove("sign");
+                        btnMult.classList.remove("sign");
+                        btnSub.classList.remove("sign");
+                        
+                    }else if(digit === "-"){
+                    
+                        btnAdd.classList.remove("sign");
+                        btnDiv.classList.remove("sign");
+                        btnMult.classList.remove("sign");
+                        btnSub.classList.add("sign");
+                            
+                    }else if(digit === "x"){
 
-                btnAdd.classList.remove("sign");
-                btnDiv.classList.remove("sign");
-                btnMult.classList.add("sign");
-                btnSub.classList.remove("sign");
+                        btnAdd.classList.remove("sign");
+                        btnDiv.classList.remove("sign");
+                        btnMult.classList.add("sign");
+                        btnSub.classList.remove("sign");
 
-            }else if(digit === "÷"){
+                    }else if(digit === "÷"){
 
-                btnAdd.classList.remove("sign");
-                btnDiv.classList.add("sign");
-                btnMult.classList.remove("sign");
-                btnSub.classList.remove("sign");
-            }
-            array =  calculator(digit,array);
+                        btnAdd.classList.remove("sign");
+                        btnDiv.classList.add("sign");
+                        btnMult.classList.remove("sign");
+                        btnSub.classList.remove("sign");
+                    }
+                    array =  calculator(digit,array);
+        
         }
         else if(digit === "▶"){
             array = backSpace(array);
         }
     }
     console.log(array);
+}
+
+const calculator = (sign,array) =>{
+    
+    if(sign == "+" || sign == "-" || sign == "x" || sign == "÷" || sign == "="){
+       
+                num = parseFloat(array.join(""));
+                console.log(num)
+                if(nums[0] == "a"){
+                    nums[0] = num;
+                }else{
+                    nums[1] = num;
+                    array = clearDisplay();
+                }
+                if(sign !== "="){
+                    signbuffer = sign;
+                }
+            console.log(signbuffer)
+            console.log(nums);
+            console.log(sign)
+            if((nums[0] !== "a") && (nums[1] !== "b")){
+                    if(sign == "+" || signbuffer == "+"){
+                        nums[0] = add(nums[0],nums[1]);
+                    }
+                    if(sign == "-" || signbuffer == "-"){
+                        
+                        nums[0] = substract(nums[0],nums[1]);
+                    }
+                    if(sign == "x" || signbuffer == "x"){
+                        
+                        nums[0] = multiply(nums[0],nums[1]);
+                    }
+                    if(sign == "÷" || signbuffer == "÷"){
+                        
+                        nums[0] = divide(nums[0],nums[1]);
+                    }
+                    nums[1] = "b";
+                    console.log(nums);
+                    updateDisplay(nums[0].toString().split(""))
+            }
+    }
+
+    if(sign == "%"){
+        digits = convertInt(array) / 100;
+        digits = digits.toString().split("");
+        array = digits;
+        updateDisplay(array)
+    }
+    if(sign == "AC"){
+        nums = ["a","b"]
+        array = clearDisplay();
+    }
+    nums[1] = "b";
+    return array = ["0"];
 }
 
 const clearDisplay = () =>{
@@ -134,22 +190,6 @@ const convertInt = (numbers) =>{
     }
     let digits = numbers.join("");
     return parseInt(digits);
-}
-
-const calculator = (sign,array) =>{
-    
-
-    if(sign == "%"){
-        digits = convertInt(array) / 100;
-        digits = digits.toString().split("");
-        array = digits;
-        updateDisplay(array)
-    }
-    if(sign == "AC"){
-        nums = ["a","b"]
-        array = clearDisplay();
-    }
-    return array;
 }
 
 window.onload = () =>{
