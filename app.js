@@ -6,7 +6,7 @@ const btnSub = document.querySelector(".sub");
 const btnMult = document.querySelector(".mult");
 const btnDiv = document.querySelector(".div");
 
-let array = [];
+let array = ["0"];
 let num = "";
 let nums = ["a","b"];
 
@@ -33,9 +33,9 @@ const action = (digit) =>{
     if(parseInt(digit) || parseInt(digit) == 0 || digit == "."){
         
         if(array.length < 16){
-            if(array.length < 1){
+            if(array[0] == "0"){
                 if(digit !== "0"){
-                    
+                    array.pop();
                     btnAdd.classList.remove("sign");
                     btnDiv.classList.remove("sign");
                     btnMult.classList.remove("sign");
@@ -53,28 +53,32 @@ const action = (digit) =>{
         if(digit === "+" || digit === "-" || digit === "x" || digit === "÷" || digit ==="=" || digit === "%" || digit === "AC"){
             
             if(digit === "+"){
-                    btnAdd.classList.add("sign");
-                    btnDiv.classList.remove("sign");
-                    btnMult.classList.remove("sign");
-                    btnSub.classList.remove("sign");
+
+                btnAdd.classList.add("sign");
+                btnDiv.classList.remove("sign");
+                btnMult.classList.remove("sign");
+                btnSub.classList.remove("sign");
                 
             }else if(digit === "-"){
               
-                    btnAdd.classList.remove("sign");
-                    btnDiv.classList.remove("sign");
-                    btnMult.classList.remove("sign");
-                    btnSub.classList.add("sign");
+                btnAdd.classList.remove("sign");
+                btnDiv.classList.remove("sign");
+                btnMult.classList.remove("sign");
+                btnSub.classList.add("sign");
                       
             }else if(digit === "x"){
-                    btnAdd.classList.remove("sign");
-                    btnDiv.classList.remove("sign");
-                    btnMult.classList.add("sign");
-                    btnSub.classList.remove("sign");
+
+                btnAdd.classList.remove("sign");
+                btnDiv.classList.remove("sign");
+                btnMult.classList.add("sign");
+                btnSub.classList.remove("sign");
+
             }else if(digit === "÷"){
-                    btnAdd.classList.remove("sign");
-                    btnDiv.classList.add("sign");
-                    btnMult.classList.remove("sign");
-                    btnSub.classList.remove("sign");
+
+                btnAdd.classList.remove("sign");
+                btnDiv.classList.add("sign");
+                btnMult.classList.remove("sign");
+                btnSub.classList.remove("sign");
             }
             array =  calculator(digit,array);
         }
@@ -82,10 +86,12 @@ const action = (digit) =>{
             array = backSpace(array);
         }
     }
+    console.log(array);
 }
 
 const clearDisplay = () =>{
-    array = [];
+
+    array = ["0"];
     result.textContent = "0";
     return array;
 }
@@ -104,9 +110,15 @@ const updateDisplay = (digits) =>{
 
 const backSpace = (array) =>{
     if(array[0] == "0" && array[1] == "."){
-        array = [];
+        array = ["0"];
+    }else if(array[0] !== "0" && array.length >=1){
+        if(array.length > 1){
+            array.pop();
+        }else{
+            array = ["0"]
+        }
     }else{
-        array.pop()
+        array = ["0"];
     }
     updateDisplay(array);
     return array;
@@ -125,30 +137,7 @@ const convertInt = (numbers) =>{
 }
 
 const calculator = (sign,array) =>{
-    console.log(sign);
-    if(sign == "+" || sign == "-" || sign == "x" || sign == "÷" ){
-        
-        num = parseFloat(array.join(""));
-        if(nums[0] == "a"){
-            nums[0] = num;
-            array = [];
-        }else{
-            nums[1] = num;
-            array = clearDisplay();
-        }
-
-        if(nums[0] !== "a" && nums[1] !== "b"){
-
-            if(sign == "+"){
-                nums[0] = add(nums[0],nums[1]);
-            }
-            if(sign == "-"){
-                nums[0] = substract(nums[0],nums[1]);
-            }
-            updateDisplay(nums[0].toString().split(""))
-        }
-        console.log(nums);
-    }
+    
 
     if(sign == "%"){
         digits = convertInt(array) / 100;
