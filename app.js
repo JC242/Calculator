@@ -33,6 +33,9 @@ const updateArray = (digit)=>{
 
 const updateDisplay = (array)=>{
     let numbers = "0";
+    while(array.length > 16){
+        array.pop();
+    }
     if(array.length > 0){
         if(array[0] == "."){
             array.unshift("0");
@@ -44,7 +47,7 @@ const updateDisplay = (array)=>{
 }
 
 const updateDisplayCount = ()=>{
-    
+
 }
 
 const deleteNum = (array) =>{
