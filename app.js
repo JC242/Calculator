@@ -54,20 +54,19 @@ const updateDisplay = (array)=>{
 }
 
 const updateDisplayCount = (digit1,digit2,sign)=>{
-    let ecuation = ""
+    let ecuation = "";
     if(parseFloat(digit2) <0){
         digit2 = `(${digit2})`;
     }
-    if(digit1 != "" && sign != "" && digit2 != ""){
+    if(digit1 != "" && sign != "d" && digit2 != ""){
         ecuation = `${digit1} ${sign} ${digit2} =`
-        count.textContent = ecuation;
     }else if(digit1 != "" && sign != "d"){
         ecuation = `${digit1} ${sign}`;
-        count.textContent = ecuation;
     }
     else{
-        count.textContent = "";
+        ecuation = "";
     }
+    count.textContent = ecuation;
 }
 
 const deleteNum = () =>{
@@ -179,6 +178,9 @@ window.onload = () =>{
         }
         if(event.keyCode == "13"){
             [array,arrayBuffer] = operation(array,arrayBuffer,"=");
+        }
+        if(event.keyCode == "110"){
+            rray = updateArray(".")
         }
         
     }
