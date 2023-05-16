@@ -165,6 +165,22 @@ window.onload = () =>{
             num = (parseInt(event.keyCode) - 96).toString();
             array = updateArray(num)
         }
+        if(event.keyCode == "107"){
+            [array,arrayBuffer] = operation(array,arrayBuffer,"+");
+        }
+        if(event.keyCode == "109"){
+            [array,arrayBuffer] = operation(array,arrayBuffer,"-");
+        }
+        if(event.keyCode == "106"){
+            [array,arrayBuffer] = operation(array,arrayBuffer,"x");
+        }
+        if(event.keyCode == "111"){
+            [array,arrayBuffer] = operation(array,arrayBuffer,"÷");
+        }
+        if(event.keyCode == "13"){
+            [array,arrayBuffer] = operation(array,arrayBuffer,"=");
+        }
+        
     }
    btnsNums.forEach(num => {
        num.addEventListener("click",function(e){
