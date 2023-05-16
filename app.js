@@ -180,7 +180,10 @@ window.onload = () =>{
             [array,arrayBuffer] = operation(array,arrayBuffer,"=");
         }
         if(event.keyCode == "110"){
-            rray = updateArray(".")
+            array = updateArray(".");
+        }
+        if(event.keyCode == "8"){
+            array = deleteNum();
         }
         
     }
