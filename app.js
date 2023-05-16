@@ -7,7 +7,7 @@ const btnMult = document.querySelector(".mult");
 const btnDiv = document.querySelector(".div");
 const btnDel = document.querySelector(".delete");
 const btnAC = document.querySelector(".erase");
-const btnPorc= document.querySelector(".porcentage");
+const btnNeg = document.querySelector(".negative");
 const btnEnter = document.querySelector(".enter");
 
 let array = ["0"];
@@ -66,16 +66,18 @@ const clearDisplay = (array,arrayBuffer) =>{
     return [array,arrayBuffer];
 }
 
-const porcentage = () =>{
+const addNegative = () =>{
     nums = result.textContent;
     if(nums !== "0"){
         nums = nums.split("");
 
-        if(nums[0] == "."){
-            nums.unshift("0");
+        if(nums[0] !== "-"){
+            nums.unshift("-");
+        }else{
+            nums.shift();
         }
         numbers = nums.join("");
-        numbers = parseFloat(numbers) / 100;
+        numbers = parseFloat(numbers);
         numbers = numbers.toString().split("");
         updateDisplay(numbers);
         console.log(numbers)
@@ -141,8 +143,8 @@ window.onload = () =>{
    btnAC.addEventListener("click",function(e){
         [array,arrayBuffer] = clearDisplay(array,arrayBuffer);
    });
-   btnPorc.addEventListener("click",function(e){
-       array = porcentage();
+   btnNeg.addEventListener("click",function(e){
+       array = addNegative();
    });
    btnAdd.addEventListener("click",function(e){
         [array,arrayBuffer] = operation(array,arrayBuffer,btnAdd.textContent);
