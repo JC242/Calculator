@@ -15,7 +15,7 @@ let arrayBuffer = ['a','b','c','d'];
 let countArray = [];
 
 const updateArray = (digit)=>{
-
+    console.log(array);
     if(array.length < 16){
         if(array[0] == "0" && array.length == 1){
             if(digit != 0){
@@ -83,6 +83,7 @@ const addNegative = () =>{
         console.log(numbers)
         return numbers;
     }
+    return nums = ["0"]
 }
 
 const updateBuffer = (digit,array,arrayBuffer,operation) =>{
