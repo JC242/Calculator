@@ -11,11 +11,15 @@ const btnNeg = document.querySelector(".negative");
 const btnEnter = document.querySelector(".enter");
 
 let array = ["0"];
-let arrayBuffer = ['a','b','c','d'];
+let arrayBuffer = ['a','b','c','d','r'];
 let countArray = [];
 
 const updateArray = (digit)=>{
-    console.log(array);
+    equation = count.textContent.split(" ");
+    if(arrayBuffer[2] != 'c' && equation.length > 2 && array.length == 0){
+        array = arrayBuffer[0].toString().split("");
+        arrayBuffer[0] = 'a'
+    }
     if(array.length < 16){
         if(array[0] == "0" && array.length == 1){
             if(digit != 0){
@@ -27,12 +31,14 @@ const updateArray = (digit)=>{
         }
        
     }
+    console.log(array)
     updateDisplay(array);
     return array;
 }   
 
 const updateDisplay = (array)=>{
     let numbers = "0";
+    console.log(array);
     while(array.length > 16){
         array.pop();
     }
@@ -40,17 +46,32 @@ const updateDisplay = (array)=>{
         if(array[0] == "."){
             array.unshift("0");
         }
+        console.log(array)
         numbers = array.join("");
     }
     result.textContent = numbers;
     return array;
 }
 
-const updateDisplayCount = ()=>{
-
+const updateDisplayCount = (digit1,digit2,sign)=>{
+    let ecuation = ""
+    if(parseFloat(digit2) <0){
+        digit2 = `(${digit2})`;
+    }
+    if(digit1 != "" && sign != "" && digit2 != ""){
+        ecuation = `${digit1} ${sign} ${digit2} =`
+        count.textContent = ecuation;
+    }else if(digit1 != "" && sign != "d"){
+        ecuation = `${digit1} ${sign}`;
+        count.textContent = ecuation;
+    }
+    else{
+        count.textContent = "";
+    }
 }
 
-const deleteNum = (array) =>{
+const deleteNum = () =>{
+    array = result.textContent.split("")
     array.pop();
     if(array.length == 0){
         array = ["0"];
@@ -61,7 +82,7 @@ const deleteNum = (array) =>{
 
 const clearDisplay = (array,arrayBuffer) =>{
     array = ["0"];
-    arrayBuffer = ['a','b','c','d'];
+    arrayBuffer = ['a','b','c','d','r'];
     updateDisplay(array);
     return [array,arrayBuffer];
 }
@@ -80,47 +101,51 @@ const addNegative = () =>{
         numbers = parseFloat(numbers);
         numbers = numbers.toString().split("");
         updateDisplay(numbers);
-        console.log(numbers)
         return numbers;
     }
-    return nums = ["0"]
+    return nums = ["0"];
 }
 
 const updateBuffer = (digit,array,arrayBuffer,operation) =>{
-    console.log(arrayBuffer);
+
     if(operation != "="){
         arrayBuffer[3] = operation;
     }
+    if(arrayBuffer[2] != "c"){
+        updateDisplayCount(arrayBuffer[0],"",arrayBuffer[3]);
+    }
     if(Number.isNaN(digit) == false || operation == "="){
-        if(arrayBuffer[0] == "a"){
-            arrayBuffer[0] = digit;
-            arrayBuffer[2] = arrayBuffer[0];
-        }else{
-            if(Number.isNaN(digit) == false){
-                arrayBuffer[1] = digit;
+            if(arrayBuffer[0] == "a"){
+                arrayBuffer[0] = digit;
+                arrayBuffer[2] = arrayBuffer[0];
+                updateDisplayCount(digit,"",arrayBuffer[3]);
             }else{
-                arrayBuffer[1] = arrayBuffer[2];
+                if(Number.isNaN(digit) == false){
+                    arrayBuffer[1] = digit;
+                }else{
+                    arrayBuffer[1] = arrayBuffer[2];
+                }
             }
-            clearDisplay();
-        }
-        console.log(arrayBuffer);
-        if(arrayBuffer[0] !== 'a' && arrayBuffer[1] !== 'b' || operation == "="){
-            if(operation == "+" || arrayBuffer[3] == "+"){
-                arrayBuffer[0] = arrayBuffer[0] + arrayBuffer[1];
-            }else if(operation == "-"  || arrayBuffer[3] == "-"){
-                arrayBuffer[0] = arrayBuffer[0] - arrayBuffer[1];
-            }else if(operation == "x"  || arrayBuffer[3] == "x"){
-                arrayBuffer[0] = arrayBuffer[0] * arrayBuffer[1];
-            }else if(operation == "÷"  || arrayBuffer[3] == "÷"){
-                arrayBuffer[0] = arrayBuffer[0] / arrayBuffer[1];
+            if(arrayBuffer[0] !== 'a' && arrayBuffer[1] !== 'b' || operation == "="){
+                if(arrayBuffer[1] == 'b'){arrayBuffer[1] = arrayBuffer[4]}
+                updateDisplayCount(arrayBuffer[0],arrayBuffer[1],arrayBuffer[3])
+
+                if(operation == "+" || arrayBuffer[3] == "+"){
+                    arrayBuffer[0] = arrayBuffer[0] + arrayBuffer[1];
+                }else if(operation == "-"  || arrayBuffer[3] == "-"){
+                    arrayBuffer[0] = arrayBuffer[0] - arrayBuffer[1];
+                }else if(operation == "x"  || arrayBuffer[3] == "x"){
+                    arrayBuffer[0] = arrayBuffer[0] * arrayBuffer[1];
+                }else if(operation == "÷"  || arrayBuffer[3] == "÷"){
+                    arrayBuffer[0] = arrayBuffer[0] / arrayBuffer[1];
+                }
+                arrayBuffer[4] = arrayBuffer[0]
+                updateDisplay(arrayBuffer[0].toString().split(""));
+                
+                arrayBuffer[2] = arrayBuffer[1];
+                arrayBuffer[1] = 'b';
             }
-            updateDisplay(arrayBuffer[0].toString().split(""));
-            console.log(arrayBuffer);
-            arrayBuffer[2] = arrayBuffer[1];
-            arrayBuffer[1] = 'b';
-            console.log(arrayBuffer);
-        }
-        return [array = [] , arrayBuffer];
+            return [array = [], arrayBuffer];
     }
     return [array, arrayBuffer];
 }
@@ -133,16 +158,25 @@ const operation = (array,arrayBuffer,sign) =>{
 }
     
 window.onload = () =>{
+
+    document.body.addEventListener('keydown',keyDown);
+    function keyDown(event){
+        if(event.keyCode > '95' && event.keyCode < '106'){
+            num = (parseInt(event.keyCode) - 96).toString();
+            array = updateArray(num)
+        }
+    }
    btnsNums.forEach(num => {
        num.addEventListener("click",function(e){
             array = updateArray(num.textContent);
        });
    });
    btnDel.addEventListener("click",function(e){
-        array = deleteNum(array);
+        array = deleteNum();
    });
    btnAC.addEventListener("click",function(e){
         [array,arrayBuffer] = clearDisplay(array,arrayBuffer);
+        updateDisplayCount("","","")
    });
    btnNeg.addEventListener("click",function(e){
        array = addNegative();
