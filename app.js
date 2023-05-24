@@ -1,10 +1,7 @@
 const btnsNums = document.querySelectorAll(".num");
+const btnOperation = document.querySelectorAll(".operation");
 const result = document.querySelector(".result");
 const count = document.querySelector(".count");
-const btnAdd = document.querySelector(".add");
-const btnSub = document.querySelector(".sub");
-const btnMult = document.querySelector(".mult");
-const btnDiv = document.querySelector(".div");
 const btnDel = document.querySelector(".delete");
 const btnAC = document.querySelector(".erase");
 const btnNeg = document.querySelector(".negative");
@@ -202,19 +199,9 @@ window.onload = () =>{
    btnNeg.addEventListener("click",function(e){
        array = addNegative();
    });
-   btnAdd.addEventListener("click",function(e){
-        [array,arrayBuffer] = operation(array,arrayBuffer,btnAdd.textContent);
+   btnOperation.forEach(btn =>{
+        btn.addEventListener("click",function(e){
+            [array,arrayBuffer] = operation(array,arrayBuffer,this.textContent);
+        });
    });
-   btnSub.addEventListener("click",function(e){
-        [array,arrayBuffer] = operation(array,arrayBuffer,btnSub.textContent);
-   });
-   btnMult.addEventListener("click",function(e){
-        [array,arrayBuffer] = operation(array,arrayBuffer,btnMult.textContent);
-   });
-   btnDiv.addEventListener("click",function(e){
-        [array,arrayBuffer] = operation(array,arrayBuffer,btnDiv.textContent);
-    });
-   btnEnter.addEventListener("click",function(e){
-        [array,arrayBuffer] = operation(array,arrayBuffer,btnEnter.textContent);
-   });   
 }
